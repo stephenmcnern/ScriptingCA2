@@ -5,26 +5,166 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Form</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #left-side {
+            width: 45%;
+        }
+
+        #right-side {
+            width: 45%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #lower-right {
+            margin-top: 20px;
+        }
+
+        #container {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .valid {
+            color: green;
+        }
+
+        .invalid {
+            color: red;
+        }
+    </style>
 </head>
 
 <body>
-    <ul id="college">
-        <li class="highlight">BSc Computing</li>
-        <ol id="bsc">
-            <li>(L0012345) Black, Mary [F]</li>)
+    <div id="container">
+        <!--Left Side Input Fields-->
+        <div id="left-side">
+            <h2> Enter Student Information</h2>
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName">
+            <br>
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName">
+            <br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+            <br>
+            <label for="caoNumber">CAO Number:</label>
+            <input type="text" id="caoNumber" name="caoNumber">
+            <br>
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="unknown">Unknown</option>
+            </select>
+            <br>
+            <label>Courses:</label>
+            <br>
+            <input type="radio" id="computing" name="computing" value="Computing">
+            <label for="computing">BSc Computing</label>
+            <br>
+            <input type="radio" id="applied" name="applied" value="Applied">
+            <label for="applied">Applied Computing</label>
+            <br>
+            <input type="radio" id="games" name="games" value="Games">
+            <label for="games">Games Programming</label>
+            <br>
+            <input type="checkbox" id="terms" name="terms">
+            <label for="terms">I agree to the terms and conditions</label>
+            <br>
+            <button onclick="addStudent()">Add Student</button>
+            <button onclick="removeStudent()">Remove Student</button>
+        </div>
+        <!--Right Side Student Display-->
+        <div id="right-side">
+            <h2>Registered Students</h2>
+            <div id="computing-students" class="course-students"></div>
+            <div id="applied-students" class="course-students"></div>
+            <div id="games-students" class="course-students"></div>
+        </div>
+    </div>
+    <div id="lower-right">
+        <h3>Student Information</h3>
+        <p>Email: <span id="student-email"></span></p>
+        <p>DOB: <span id="student-dob"></span></p>
+        <p>CAO: <span id="student-cao"></span></p>
+        <p>Gender<img id="gender-img" src="" alt="Gender Image"></p>
+    </div>
+    <script>
+        function addStudent() {
+            const firstNameInput = document.getElementById("firstName");
+            const lastNameInput = document.getElementById("lastName");
+            const emailInput = document.getElementById("email");
+            const caoNumberInput = document.getElementById("caoNumber");
+            const genderInput = document.getElementById("gender");
+            const courseInput = document.querySelector("course");
+            const termsInput = document.getElementById("terms");
 
-        </ol>
-        <li>Applied Computing</li>
-        <ol id="applied">
-            <li>(L00012345) Green, Gerard [M]</li>
-            <li>(L00012345) Orange, Charlie [M]</li>
-        </ol>
-        <li>Games Programming</li>
-        <ol id="games">
-            <li>(L00012345) Red, Sue [F]</li>
-            <li>(L00012345) Purple, Dave [?]</li>
-        </ol>
-    </ul>
+            if (!termsInput.checked) {
+                alert("You must agree with the terms and conditions");
+                return;
+            }
+            const caoNumber = caoNumberInput.value.trim();
+            if (isDuplicateCAOnumber(caoNumber)) {
+                alert("Duplicate CAO Number");
+                return;
+            }
+        }
+
+        function isValidName(name) {
+            const nameRegex = /^[A-Za-z]+(?: [A-Za-z]+)?$/;
+            return nameRegex.test(name)
+        }
+        // Validate the Inputs
+        const isValidFirstName = isValidName(firstNameInput.value);
+        const isValidLastName = isValidName(lastNameInput.value);
+        const isValidEmailString = isValidEmail(emailInput.value);
+        const isValidCAONumberString = isValidCAO(caoNumberInput.value);
+        const isValidGender = genderInput.value !== "";
+        const isValidCourse = courseInput !== null;
+
+        // Changes the CSS colour to red or green
+        firstNameInput.classlist.toggle("invalid", !isValidFirstName);
+        lastNameInput.classlist.toggle("invalid", !isValidLastName);
+        emailInput.classlist.toggle("invalid", !isValidEmailString);
+        caoNumberInput.classlist.toggle("invalid", !isValidCAONumberString);
+        genderInput.classlist.toggle("invalid", !isValidGender);
+
+        // Check that all inputs pass validation
+        if (
+            isValidFirstName &&
+            isValidLastName &&
+            isValidEmailString &&
+            isValidCAONumberString &&
+            isValidGender &&
+            isValidCourse
+        ) {
+
+        }
+
+        const fullName = `${firstNameInput.value.chartAt(0).toUpperCase()}${firstNameInput.slice(1).toLowerCase()} ${lastNameInput.value.chartAt(0).toUpperCase()}${lastNameInput.value.slice(1).toLowerCase()}`;
+        const courseName = courseInput.value;
+
+        const studentsByCourse = { "Computing": [], "Applied": [], "Games": [], };
+        studentsByCourse[courseName].push({
+            fullName,
+            email: emailInput.value,
+            caoNumber,
+            gender: genderInput.value,
+        })
+    </script>
+
 </body>
 
 </html>
