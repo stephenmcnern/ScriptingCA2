@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Form</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    #left-side {
+      width: 45%;
+    }
+
+    #right-side {
+      width: 45%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #lower-right {
+      margin-top: 20px;
+    }
+
+    #container {
+      display: flex;
+      justify-content: space-between;
+      margin: 20px;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .valid {
+      color: green;
+    }
+
+    .invalid {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <!--Left Side Input Fields-->
+    <div id="left-side">
+      <h2>Enter Student Information</h2>
+      <label for="firstName">First Name:</label>
+      <input type="text" id="firstName" name="firstName" />
+      <br />
+      <label for="lastName">Last Name:</label>
+      <input type="text" id="lastName" name="lastName" />
+      <br />
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" />
+      <br />
+      <label for="dob">DOB:</label>
+      <input type="date" id="dob" name="dob" />
+      <label for="caoNumber">CAO Number:</label>
+      <input type="text" id="caoNumber" name="caoNumber" />
+      <br />
+      <label for="gender">Gender:</label>
+      <select id="gender" name="gender">
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="unknown">Unknown</option>
+      </select>
+      <br />
+      <label>Courses:</label>
+      <br />
+      <input type="radio" id="Computing" name="course" value="Computing" />
+      <label for="computing">BSc Computing</label>
+      <br />
+      <input type="radio" id="Applied" name="course" value="Applied" />
+      <label for="applied">Applied Computing</label>
+      <br />
+      <input type="radio" id="Games" name="course" value="Games" />
+      <label for="games">Games Programming</label>
+      <br />
+      <input type="checkbox" id="terms" name="terms" />
+      <label for="terms">I agree to the terms and conditions</label>
+      <br />
+      <button id="addStudentButton">Add Student</button>
+      <button id="removeStudentButton">Remove Student</button>
+    </div>
+    <!--Right Side Student Display-->
+    <div id="right-side">
+      <h2>Registered Students</h2>
+      <div id="computing-students" class="course-students">
+        <h3>Computing Students</h3>
+        <ul></ul>
+      </div>
+      <div id="applied-students" class="course-students">
+        <h3>Applied Students</h3>
+        <ul></ul>
+      </div>
+      <div id="games-students" class="course-students">
+        <h3>Games Students</h3>
+        <ul></ul>
+      </div>
+    </div>
+  </div>
+  <!--Lower Left display-->
+  <div id="student-details"></div>
+  <script src="script.js"></script>
+</body>
+
+</html>
